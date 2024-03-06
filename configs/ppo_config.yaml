@@ -1,0 +1,62 @@
+# Modified from Open-Assistant's model/model_training/configs/ppo_config.yaml
+
+train:
+  seq_length: 2032
+  epochs: 3000
+  total_steps: 3000
+  batch_size: 32
+  checkpoint_interval: 1000
+  eval_interval: 100
+  pipeline: "PromptPipeline"
+  trainer: "CustomAcceleratePPOTrainer"
+  # tracker: wandb
+  # project_name: your_project_name
+  # entity_name: your_entity_name
+
+model:
+  model_path:
+  model_arch_type: causal
+  num_layers_unfrozen: 2
+
+tokenizer:
+  tokenizer_path:
+  truncation_side: "left" 
+  padding_side: "left" 
+
+optimizer:
+  name: "adamw"
+  kwargs:
+    lr: 1.0e-6
+    betas: [0.9, 0.95]
+    eps: 1.0e-8
+    weight_decay: 1.0e-6
+
+scheduler:
+  name: "cosine_annealing"
+  kwargs:
+    T_max: 10000
+    eta_min: 1.0e-7
+
+method:
+  name: "ppoconfig"
+  num_rollouts: 4
+  chunk_size: 2
+  ppo_epochs: 4
+  init_kl_coef: 0.1
+  target: 6
+  horizon: 10000
+  gamma: 1
+  lam: 0.95
+  cliprange: 0.2
+  cliprange_value: 0.2
+  vf_coef: 1
+  scale_reward: False 
+  ref_mean: null
+  ref_std: null
+  cliprange_reward: 10
+  gen_kwargs:
+    max_new_tokens: 256
+    top_k: 0
+    top_p: 1.0
+    do_sample: True
+    temperature: 1.0

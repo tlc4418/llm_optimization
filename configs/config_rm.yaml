@@ -1,0 +1,68 @@
+# Modified from Open-Assistant's model/model_training/configs/config_rm.yaml
+
+# Open-Assistant RM defaults
+defaults_rm:
+  rng_seed: 0xa1221f97
+  is_reward_model: true
+  pooling: last
+  learning_rate: 1e-5
+  gradient_checkpointing: false
+  gradient_accumulation_steps: 2
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  adam_beta1: 0.9
+  adam_beta2: 0.95
+  adam_epsilon: 1e-12
+  weight_decay: 0.00
+  warmup_steps: 10
+  eval_steps: 50
+  save_steps: 100
+  save_strategy: steps
+  max_length: 512
+  num_train_epochs: 2
+  logging_steps: 10
+  max_grad_norm: 2.0
+  save_total_limit: 4
+  dtype: fp16
+  eval_accumulation_steps:
+  freeze_layer:
+  cache_dir: .cache
+  loss_fn: RMLoss
+  score_l2_reg: 0.001
+  eval_size:
+  log_dir: "base"
+  quantization: false
+  seq2seqmodel: false
+  fuse_gelu: true
+  log_wandb: false
+  verbose: false
+  output_dir: .saved_models_rm
+  use_custom_sampler: false
+  residual_dropout: 0.0
+  use_flash_attention: false
+  sort_by_length: false
+  per_digit_tokens: false
+  datasets_extra: []
+  metrics: ["accuracy", "kendalltau"]
+  deepspeed_config: configs/zero_config.json
+  max_replies: 5
+
+
+# Example reward model config for Pythia 70M model (which becomes a 44M reward model after conversion)
+rm-pythia-44m:
+  datasets: # Preference datasets to use for training
+    - alpaca_farm_pref
+  use_custom_sampler: true
+  model_name: tlc4418/pythia_70m_sft # Base SFT model (here Pythia 70M)
+  residual_dropout: 0.01
+  dtype: bf16
+  max_length: 520
+  use_flash_attention: true
+  warmup_steps: 50
+  gradient_accumulation_steps: 4
+  per_device_train_batch_size: 8
+  per_device_eval_batch_size: 8
+  num_train_epochs: 5
+  eval_steps: 300
+  save_steps: 1000
+  output_dir: models/rm-pythia-44m # '_seed{rng_seed}' will be appended

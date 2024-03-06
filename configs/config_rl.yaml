@@ -1,0 +1,92 @@
+# Modified from Open-Assistant's model/model_training/configs/config_rl.yaml
+
+defaults_rlhf:
+  rng_seed: 0xa1221f97
+  datasets: []
+  datasets_extra: []
+  cache_dir: .cache
+  output_dir: runs/ppo
+  eval_size: 4
+  num_eval_prompts: 4
+  rank_config:
+  sft_config:
+  debug: false
+  dtype: bf16
+
+
+# Most paremeters are based off OpenAssistant's defaults for pythia_rlhf
+pythia_rlhf_individual:
+  output_dir: runs/ppo_individual
+  datasets:
+    - alpaca_farm
+
+  gold_config:
+    model_name: alpaca_farm_models/reward-model-human
+    is_alpacafarm_rm: false
+    batch_size: 32
+
+  rank_config:
+    is_reward_model: true
+    model_names: 
+      - models/rm-pythia-44m_seed1
+    cache_dir: .cache
+    pooling: last
+    residual_dropout: 0.01
+    use_flash_attention: false
+    dtype: bf16
+    batch_size: 128
+
+  sft_config:
+    is_reward_model: false
+    model_name: tlc4418/pythia_1.4b_sft_policy
+    cache_dir: .cache
+    quantization: false
+    seq2seqmodel: false
+    freeze_layer:
+    num_layers_unfrozen: 2
+    residual_dropout: 0.2
+    use_flash_attention: false
+    dtype: bf16
+    batch_size: 32
+
+
+pythia_rlhf_ensemble:
+  output_dir: runs/ppo_ensemble
+  datasets:
+    - alpaca_farm
+
+  gold_config:
+    model_name: alpaca_farm_models/reward-model-human
+    is_alpacafarm_rm: false
+    batch_size: 32
+
+  rank_config:
+    is_reward_model: true
+    model_names: 
+      - models/rm-pythia-44m_seed1
+      - models/rm-pythia-44m_seed2
+      - models/rm-pythia-44m_seed3
+      - models/rm-pythia-44m_seed4
+      - models/rm-pythia-44m_seed5
+
+    objective_name: mean # Change objetive (mean, WCO, or UWO)
+    uwo_weight: 0.1 # Change UWO weight (only for UWO)
+    cache_dir: .cache
+    pooling: last
+    residual_dropout: 0.01
+    use_flash_attention: false
+    dtype: bf16
+    batch_size: 128
+
+  sft_config:
+    is_reward_model: false
+    model_name: tlc4418/pythia_1.4b_sft_policy
+    cache_dir: .cache
+    quantization: false
+    seq2seqmodel: false
+    freeze_layer:
+    num_layers_unfrozen: 2 
+    residual_dropout: 0.2
+    use_flash_attention: false
+    dtype: bf16
+    batch_size: 32

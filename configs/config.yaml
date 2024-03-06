@@ -1,0 +1,109 @@
+# Modified from Open-Assistant's model/model_training/configs/config.yaml
+
+# Open-Assistant SFT defaults
+defaults:
+  rng_seed: 0xa1221f97
+  learning_rate: 1e-5
+  gradient_checkpointing: false
+  int8_training: false
+  gradient_accumulation_steps: 32
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  adam_beta1: 0.9
+  adam_beta2: 0.95
+  adam_epsilon: 1e-12
+  weight_decay: 0.00
+  warmup_steps: 600
+  eval_steps: 200
+  save_strategy: steps
+  save_steps: 1000
+  max_length: 512
+  val_max_length:
+  num_train_epochs: 3
+  logging_steps: 10
+  max_grad_norm: 2.0
+  save_total_limit: 4
+  dtype: fp16
+  eval_accumulation_steps:
+  freeze_layer:
+  datasets:
+    - webgpt
+    - squad_v2
+    - adversarial_qa
+    - trivia_qa_nocontext
+    - xsum
+    - cnn_dailymail
+    - multi_news
+    - scitldr
+    - soda:
+        input_max_length: 1024
+    - joke
+    - gsm8k
+    - dive_mt
+    - wmt2019_zh-en
+    - wmt2019_ru-en
+    - wmt2019_de-en
+    - ted_trans_nl-en
+    - ted_trans_de-ja
+    - wmt2019_de-en
+    - samsum
+    - soda_dialogue
+  # instructional_datasets:
+  #  - humaneval_mbpp_codegen_qa
+  #  - humaneval_mbpp_testgen_qa
+  #  - grade_school_math_instructions
+  #  - recipes
+  #  - ubuntu_dialogue_qa
+  #  - cmu_wiki_qa
+  #  - youtube_subs_howto100M
+  #  - iapp_wiki_qa_squad
+  #  - zhihu-kol
+  datasets_extra: [] # For config options to add additional datasets, since yaml doesn't let us extend arrays
+  cache_dir: .cache
+  loss_fn: CrossEntropyLoss
+  eval_size:
+  log_dir: "base"
+  quantization: false
+  seq2seqmodel: false
+  poly_eps: 1.0
+  fuse_gelu: true
+  log_wandb: true
+  samples_mixing: false # uses collator that mixes samples in the batch to create a single sample with possible multiple tasks within
+  verbose: false
+  output_dir: saved_model
+  use_custom_sampler: false
+  random_offset_probability: 0.8 # probability for random message offsets
+  label_masking: true
+  residual_dropout: 0.0
+  use_flash_attention: false
+  sort_by_length: false
+  use_system_prefix: false
+  system_prefix:
+    "You are Joi, a large language model trained by Open-Assistant. Answer as
+    concisely as possible.\nKnowledge cutoff: 2021-09-01\nCurrent date:
+    2023-03-12"
+  use_system_tag: false
+  system_property_dropout: 0.5
+  system_add_length: false
+  per_digit_tokens: false
+  is_reward_model: false
+  residual_dropout_lima: false
+  deepspeed_config: configs/zero_config.json
+  peft_model: false
+  peft_type:
+  superhot: false
+
+
+# Example SFT config for Pythia 70M model
+pythia-70m:
+  dtype: bf16
+  learning_rate: 8e-6
+  model_name: EleutherAI/pythia-70m
+  max_length: 520
+  warmup_steps: 10
+  gradient_accumulation_steps: 8
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 8
+  output_dir: models/pythia_model_70m_sft
+  datasets:
+    - alpaca_farm
