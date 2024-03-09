@@ -191,5 +191,10 @@ Here we set the config to already contain the 5 trained reward models under the 
 ## Citation
 If you use the models, data, or code in this repo, please consider citing our work.
 ```
-@inproceedings{}
+@article{coste2023reward,
+  title={Reward model ensembles help mitigate overoptimization},
+  author={Coste, Thomas and Anwar, Usman and Kirk, Robert and Krueger, David},
+  journal={arXiv preprint arXiv:2310.02743},
+  year={2023}
+}
 ```
