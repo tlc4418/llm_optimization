@@ -1,9 +1,11 @@
-# LLM Overoptimization and Reward Model Ensembles
+# LLM Overoptimization and Reward Model Ensembles (ICLR 2024)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 
-This repository contains the code related to "[Reward Model Ensembles Help Mitigate Overoptimization](https://arxiv.org/abs/2310.02743)". In particular, it provides the following:
+This repository contains the code related to **ICLR 2024** paper "[Reward Model Ensembles Help Mitigate Overoptimization](https://arxiv.org/abs/2310.02743)". 
+
+In particular, it provides the following:
 - An easy way to perform LLM instruction supervised fine-tuning (SFT) as laid out in the paper
 - An easy way to create and train one or more reward models to be used in reward model ensembles (or on their own)
 - A best-of-*n* inference pipeline, both with individual reward models and ensembles
