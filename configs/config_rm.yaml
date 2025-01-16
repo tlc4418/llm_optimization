@@ -46,6 +46,7 @@ defaults_rm:
   metrics: ["accuracy", "kendalltau"]
   deepspeed_config: configs/zero_config.json
   max_replies: 5
+  residual_dropout_lima: false
 
 
 # Example reward model config for Pythia 70M model (which becomes a 44M reward model after conversion)
