@@ -52,7 +52,7 @@ defaults_rm:
 # Example reward model config for Pythia 70M model (which becomes a 44M reward model after conversion)
 rm-pythia-44m:
   datasets: # Preference datasets to use for training
-    - alpaca_farm_pref
+    - custom_hf_pref
   use_custom_sampler: true
   model_name: tlc4418/pythia_70m_sft # Base SFT model (here Pythia 70M)
   residual_dropout: 0.01
