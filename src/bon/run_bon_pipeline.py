@@ -74,7 +74,7 @@ def main(
         entry["gold_scores"] = entry["gold_scores"][:big_n]
         return entry
 
-    gold_labelled_generations = gold_labelled_generations.map(_truncate_answers)
+    gold_labelled_generations = gold_labelled_generations.map(_truncate_answers, batched=True, batch_size=10)
 
     for s in seeds:
         print(f"Running seed {s}...")
